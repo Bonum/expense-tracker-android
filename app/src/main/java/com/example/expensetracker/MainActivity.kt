@@ -515,12 +515,13 @@ fun AddExpenseDialog(onDismiss: () -> Unit, onAddExpense: (Expense) -> Unit) {
                 // Category selection
                 Text("Category", fontWeight = FontWeight.SemiBold)
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    ExpenseCategory.values().chunked(3).forEach { rowCategories ->
+                    val categoryRows = ExpenseCategory.entries.chunked(3)
+                    for (rowCategories in categoryRows) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            rowCategories.forEach { category ->
+                            for (category in rowCategories) {
                                 CategoryChip(
                                     category = category,
                                     selected = selectedCategory == category,

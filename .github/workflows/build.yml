@@ -20,21 +20,21 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        
-    - name: Download Gradle Wrapper
-      run: |
-        cd gradle/wrapper
-        curl -o gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar
-        cd ../..
+        cache: gradle
+    
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: 8.2
         
     - name: Make gradlew executable
       run: chmod +x gradlew
       
     - name: Build debug APK
-      run: ./gradlew assembleDebug --stacktrace --no-daemon
+      run: gradle assembleDebug --stacktrace
       
     - name: Build release APK
-      run: ./gradlew assembleRelease --stacktrace --no-daemon
+      run: gradle assembleRelease --stacktrace
       
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
